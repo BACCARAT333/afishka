@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "title": "Рок-вечер в «Космонавте»",
+    "description": "Живой концерт местных групп.",
+    "dates": [
+      {
+        "start": 1804867200,
+        "end": 1804878000
+      }
+    ],
+    "place": {
+      "id": 100,
+      "title": "Клуб «Космонавт»",
+      "address": "Бронницкая ул., 24",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9186,
+        "lon": 30.3178
+      }
+    },
+    "images": [
+      {
+        "image": "https://example.com/rock.jpg"
+      }
+    ],
+    "price": "от 1500 руб.",
+    "is_free": false,
+    "categories": ["concert"],
+    "tags": ["рок", "метал"],
+    "age_restriction": "16+"
+  },
+  {
+    "id": 2,
+    "title": "Вишнёвый сад",
+    "description": "Спектакль по пьесе А. П. Чехова.",
+    "dates": [
+      {
+        "start": 1803139200,
+        "end": 1803150000
+      }
+    ],
+    "place": {
+      "id": 101,
+      "title": "Театр Комедии",
+      "address": "Невский пр., 56",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9343,
+        "lon": 30.3351
+      }
+    },
+    "images": [],
+    "price": "от 800 руб.",
+    "is_free": false,
+    "categories": ["theater"],
+    "tags": [],
+    "age_restriction": "12+"
+  },
+  {
+    "id": 3,
+    "title": "Выставка городской фотографии",
+    "description": "Фотографии Петербурга разных лет.",
+    "dates": [
+      {
+        "start": 1801465200,
+        "end": 1809190800
+      }
+    ],
+    "place": {
+      "id": 102,
+      "title": "Музей истории города",
+      "address": "Английская наб., 44",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9311,
+        "lon": 30.2978
+      }
+    },
+    "images": [],
+    "price": "",
+    "is_free": true,
+    "categories": ["exhibition"],
+    "tags": [],
+    "age_restriction": null
+  },
+  {
+    "id": 4,
+    "title": "Постоянная экспозиция «Петербург в XVIII веке»",
+    "description": "Залы с предметами быта эпохи.",
+    "dates": [
+      {
+        "start": -62135433000,
+        "end": 253370754000
+      }
+    ],
+    "place": {
+      "id": 103,
+      "title": "Исторический музей",
+      "address": "Дворцовая наб., 1",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9398,
+        "lon": 30.3146
+      }
+    },
+    "images": [],
+    "price": "400 руб.",
+    "is_free": false,
+    "categories": ["permanent-exhibitions"],
+    "tags": [],
+    "age_restriction": "6+"
+  },
+  {
+    "id": 5,
+    "title": "Ночной сеанс: классика кино",
+    "description": "Показ отреставрированного фильма.",
+    "dates": [
+      {
+        "start": 1806948000,
+        "end": 1806955200
+      }
+    ],
+    "place": {
+      "id": 104,
+      "title": "Кинотеатр «Аврора»",
+      "address": "Невский пр., 60",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9355,
+        "lon": 30.338
+      }
+    },
+    "images": [],
+    "price": "от 350 руб.",
+    "is_free": false,
+    "categories": ["cinema"],
+    "tags": [],
+    "age_restriction": "12+"
+  },
+  {
+    "id": 6,
+    "title": "Вечеринка в клубе",
+    "description": "Категория, которую приложение не поддерживает.",
+    "dates": [
+      {
+        "start": 1803931200,
+        "end": 1803952800
+      }
+    ],
+    "place": {
+      "id": 100,
+      "title": "Клуб «Космонавт»",
+      "address": "Бронницкая ул., 24",
+      "location": "spb",
+      "coords": {
+        "lat": 59.9186,
+        "lon": 30.3178
+      }
+    },
+    "images": [],
+    "price": "",
+    "is_free": false,
+    "categories": ["party"],
+    "tags": [],
+    "age_restriction": "18+"
+  },
+  {
+    "id": 7,
+    "title": "Джазовый концерт в Москве",
+    "description": "Вечер джаза.",
+    "dates": [
+      {
+        "start": 1805126400,
+        "end": 1805137200
+      }
+    ],
+    "place": {
+      "id": 200,
+      "title": "Дом музыки",
+      "address": "Космодамианская наб., 52",
+      "location": "msk",
+      "coords": {
+        "lat": 55.7358,
+        "lon": 37.6431
+      }
+    },
+    "images": [],
+    "price": "от 1200 руб.",
+    "is_free": false,
+    "categories": ["concert"],
+    "tags": ["джаз"],
+    "age_restriction": "12+"
+  },
+  {
+    "id": 8,
+    "title": "Спектакль в Москве",
+    "description": "Современная драма.",
+    "dates": [
+      {
+        "start": 1805385600,
+        "end": 1805396400
+      }
+    ],
+    "place": {
+      "id": 201,
+      "title": "МХТ им. Чехова",
+      "address": "Камергерский пер., 3",
+      "location": "msk",
+      "coords": {
+        "lat": 55.7597,
+        "lon": 37.614
+      }
+    },
+    "images": [],
+    "price": "от 1000 руб.",
+    "is_free": false,
+    "categories": ["theater"],
+    "tags": [],
+    "age_restriction": "16+"
+  }
+]

@@ -20,3 +20,11 @@ export class ValidationError extends HttpError {
     this.name = 'ValidationError';
   }
 }
+
+/** Ошибка внешней интеграции (недоступен или вернул плохой ответ сторонний сервис). */
+export class IntegrationError extends HttpError {
+  public constructor(message: string, status = 502) {
+    super(status, message);
+    this.name = 'IntegrationError';
+  }
+}
