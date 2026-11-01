@@ -3,5 +3,8 @@ dist
 coverage
 .env
 *.sqlite
+*.sqlite-wal
+*.sqlite-shm
 *.log
 .DS_Store
+data/

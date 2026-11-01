@@ -16,6 +16,11 @@ export class Exhibition extends Event {
     return this._permanent;
   }
 
+  /** Постоянная экспозиция не заканчивается: она всегда «актуальна». */
+  public override isActiveAt(moment: Date): boolean {
+    return this._permanent || super.isActiveAt(moment);
+  }
+
   public override describe(): string {
     const kind = this._permanent ? 'Постоянная экспозиция' : 'Выставка';
     return `${kind} ${this.baseInfo}`;
