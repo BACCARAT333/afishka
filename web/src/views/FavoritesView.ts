@@ -17,9 +17,18 @@ export async function renderFavorites(root: HTMLElement): Promise<void> {
       message,
       items.length === 0
         ? el('p', { class: 'muted' }, 'Пока пусто. Добавляйте события звёздочкой в афише.')
-        : el('div', { class: 'results' }, ...items.map((event) => eventCard(event, (text) => message.replaceChildren(errorBox(text))))),
+        : el(
+            'div',
+            { class: 'results' },
+            ...items.map((event) =>
+              eventCard(event, (text) => message.replaceChildren(errorBox(text))),
+            ),
+          ),
     );
   } catch (error) {
-    root.replaceChildren(el('h1', {}, 'Избранное'), errorBox(error instanceof Error ? error.message : 'Ошибка'));
+    root.replaceChildren(
+      el('h1', {}, 'Избранное'),
+      errorBox(error instanceof Error ? error.message : 'Ошибка'),
+    );
   }
 }

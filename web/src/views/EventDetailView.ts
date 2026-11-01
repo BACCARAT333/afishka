@@ -9,7 +9,10 @@ export async function renderEventDetail(root: HTMLElement, id: string): Promise<
   try {
     const event = await api.getEvent(id);
     const message = el('div', {});
-    const dates = event.endsAt === null ? formatDate(event.startsAt) : `${formatDate(event.startsAt)} — ${formatDate(event.endsAt)}`;
+    const dates =
+      event.endsAt === null
+        ? formatDate(event.startsAt)
+        : `${formatDate(event.startsAt)} — ${formatDate(event.endsAt)}`;
     root.replaceChildren(
       back,
       el(
@@ -33,6 +36,9 @@ export async function renderEventDetail(root: HTMLElement, id: string): Promise<
       ),
     );
   } catch (error) {
-    root.replaceChildren(back, errorBox(error instanceof Error ? error.message : 'Не удалось загрузить событие'));
+    root.replaceChildren(
+      back,
+      errorBox(error instanceof Error ? error.message : 'Не удалось загрузить событие'),
+    );
   }
 }

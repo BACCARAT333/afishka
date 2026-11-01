@@ -6,7 +6,10 @@ export function errorBox(message: string): HTMLElement {
   return el('div', { class: 'alert', role: 'alert' }, message);
 }
 
-export function favoriteButton(eventId: string, onError: (message: string) => void): HTMLButtonElement {
+export function favoriteButton(
+  eventId: string,
+  onError: (message: string) => void,
+): HTMLButtonElement {
   const button = el('button', { type: 'button', class: 'btn btn-fav' });
   const render = (): void => {
     const active = session.isFavorite(eventId);

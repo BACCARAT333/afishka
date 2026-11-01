@@ -4,7 +4,15 @@ import { CATEGORY_LABELS, CITIES, type EventCategory, type EventFilters } from '
 import { errorBox, eventCard } from './components';
 
 // Фильтры хранятся между переходами, чтобы после возврата со страницы события список не сбрасывался.
-const filters: EventFilters = { city: 'spb', category: '', dateFrom: '', dateTo: '', free: false, q: '', page: 1 };
+const filters: EventFilters = {
+  city: 'spb',
+  category: '',
+  dateFrom: '',
+  dateTo: '',
+  free: false,
+  q: '',
+  page: 1,
+};
 
 export function renderEventList(root: HTMLElement): void {
   const results = el('div', { class: 'results' });
@@ -22,12 +30,22 @@ export function renderEventList(root: HTMLElement): void {
     try {
       const page = await api.listEvents(filters);
       if (page.items.length === 0) {
-        results.replaceChildren(el('p', { class: 'muted' }, 'Ничего не найдено. Попробуйте изменить фильтры.'));
+        results.replaceChildren(
+          el('p', { class: 'muted' }, 'Ничего не найдено. Попробуйте изменить фильтры.'),
+        );
         return;
       }
       results.replaceChildren(...page.items.map((event) => eventCard(event, showError)));
-      const prev = el('button', { type: 'button', class: 'btn', disabled: page.page <= 1 }, '← Назад');
-      const next = el('button', { type: 'button', class: 'btn', disabled: page.page >= page.totalPages }, 'Вперёд →');
+      const prev = el(
+        'button',
+        { type: 'button', class: 'btn', disabled: page.page <= 1 },
+        '← Назад',
+      );
+      const next = el(
+        'button',
+        { type: 'button', class: 'btn', disabled: page.page >= page.totalPages },
+        'Вперёд →',
+      );
       prev.addEventListener('click', () => {
         filters.page -= 1;
         void load();
@@ -36,7 +54,15 @@ export function renderEventList(root: HTMLElement): void {
         filters.page += 1;
         void load();
       });
-      pager.replaceChildren(prev, el('span', { class: 'muted' }, `Страница ${page.page} из ${page.totalPages} · всего ${page.total}`), next);
+      pager.replaceChildren(
+        prev,
+        el(
+          'span',
+          { class: 'muted' },
+          `Страница ${page.page} из ${page.totalPages} · всего ${page.total}`,
+        ),
+        next,
+      );
     } catch (error) {
       results.replaceChildren();
       showError(error instanceof Error ? error.message : 'Не удалось загрузить события');
@@ -54,7 +80,12 @@ export function renderEventList(root: HTMLElement): void {
   const dateFrom = el('input', { type: 'date', name: 'dateFrom', value: filters.dateFrom });
   const dateTo = el('input', { type: 'date', name: 'dateTo', value: filters.dateTo });
   const free = el('input', { type: 'checkbox', name: 'free', checked: filters.free });
-  const q = el('input', { type: 'search', name: 'q', placeholder: 'Поиск по названию и описанию', value: filters.q });
+  const q = el('input', {
+    type: 'search',
+    name: 'q',
+    placeholder: 'Поиск по названию и описанию',
+    value: filters.q,
+  });
 
   const form = el(
     'form',

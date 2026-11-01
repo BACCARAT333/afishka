@@ -6,7 +6,12 @@ import { errorBox } from './components';
 export function renderAuth(root: HTMLElement, mode: 'login' | 'register'): void {
   const isLogin = mode === 'login';
   const message = el('div', {});
-  const email = el('input', { type: 'email', name: 'email', required: true, autocomplete: 'email' });
+  const email = el('input', {
+    type: 'email',
+    name: 'email',
+    required: true,
+    autocomplete: 'email',
+  });
   const password = el('input', {
     type: 'password',
     name: 'password',
@@ -14,7 +19,11 @@ export function renderAuth(root: HTMLElement, mode: 'login' | 'register'): void 
     minlength: '8',
     autocomplete: isLogin ? 'current-password' : 'new-password',
   });
-  const submit = el('button', { type: 'submit', class: 'btn primary' }, isLogin ? 'Войти' : 'Зарегистрироваться');
+  const submit = el(
+    'button',
+    { type: 'submit', class: 'btn primary' },
+    isLogin ? 'Войти' : 'Зарегистрироваться',
+  );
 
   const form = el(
     'form',
@@ -28,7 +37,11 @@ export function renderAuth(root: HTMLElement, mode: 'login' | 'register'): void 
       'p',
       { class: 'muted' },
       isLogin ? 'Нет аккаунта? ' : 'Уже есть аккаунт? ',
-      el('a', { href: isLogin ? '#/register' : '#/login' }, isLogin ? 'Зарегистрируйтесь' : 'Войдите'),
+      el(
+        'a',
+        { href: isLogin ? '#/register' : '#/login' },
+        isLogin ? 'Зарегистрируйтесь' : 'Войдите',
+      ),
     ),
   );
   form.addEventListener('submit', (submitEvent) => {

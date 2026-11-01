@@ -14,7 +14,10 @@ const nav: HTMLElement = navRoot;
 function renderNav(): void {
   const user = session.currentUser;
   if (user === null) {
-    nav.replaceChildren(el('a', { href: '#/login' }, 'Войти'), el('a', { href: '#/register' }, 'Регистрация'));
+    nav.replaceChildren(
+      el('a', { href: '#/login' }, 'Войти'),
+      el('a', { href: '#/register' }, 'Регистрация'),
+    );
     return;
   }
   const logout = el('button', { type: 'button', class: 'link' }, 'Выйти');
@@ -22,7 +25,11 @@ function renderNav(): void {
     session.logout();
     location.hash = '#/';
   });
-  nav.replaceChildren(el('a', { href: '#/favorites' }, 'Избранное'), el('span', { class: 'muted' }, user.email), logout);
+  nav.replaceChildren(
+    el('a', { href: '#/favorites' }, 'Избранное'),
+    el('span', { class: 'muted' }, user.email),
+    logout,
+  );
 }
 
 /** Простой маршрутизатор на location.hash: #/, #/event/:id, #/login, #/register, #/favorites. */
