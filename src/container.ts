@@ -4,16 +4,29 @@ import { KudaGoAdapter } from './integrations/kudago/KudaGoAdapter';
 import { KudaGoClient } from './integrations/kudago/KudaGoClient';
 import { KudaGoEventSource } from './integrations/kudago/KudaGoEventSource';
 import type { AppConfig } from './config';
+import type { RequestHandler } from 'express';
 import { EventController } from './modules/events/EventController';
 import { EventFactory } from './modules/events/EventFactory';
 import type { EventSource } from './modules/events/EventSource';
 import { EventService } from './modules/events/EventService';
 import { SqliteEventRepository } from './modules/events/SqliteEventRepository';
+import { FavoriteController } from './modules/favorites/FavoriteController';
+import { FavoriteService } from './modules/favorites/FavoriteService';
+import { SqliteFavoriteRepository } from './modules/favorites/SqliteFavoriteRepository';
+import { AuthController } from './modules/users/AuthController';
+import { AuthService } from './modules/users/AuthService';
+import { createAuthMiddleware } from './modules/users/authMiddleware';
+import { BcryptPasswordHasher } from './modules/users/PasswordHasher';
+import { SqliteUserRepository } from './modules/users/SqliteUserRepository';
+import { JwtTokenService } from './modules/users/TokenService';
 import { openDatabase } from './shared/db';
 import type { Logger } from './shared/logger';
 
 export interface Container {
   eventController: EventController;
+  authController: AuthController;
+  favoriteController: FavoriteController;
+  requireAuth: RequestHandler;
   close(): void;
 }
 
@@ -51,8 +64,21 @@ export function createContainer(
     logger,
   );
 
+  const tokens = new JwtTokenService(cfg.jwtSecret, cfg.jwtExpiresInSec);
+  const authService = new AuthService(
+    new SqliteUserRepository(db),
+    new BcryptPasswordHasher(cfg.bcryptRounds),
+    tokens,
+    undefined,
+    clock,
+  );
+  const favoriteService = new FavoriteService(new SqliteFavoriteRepository(db), repository, clock);
+
   return {
     eventController: new EventController(eventService, cfg.defaultCity),
+    authController: new AuthController(authService),
+    favoriteController: new FavoriteController(favoriteService),
+    requireAuth: createAuthMiddleware(tokens),
     close: () => db.close(),
   };
 }

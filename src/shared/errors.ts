@@ -28,3 +28,17 @@ export class IntegrationError extends HttpError {
     this.name = 'IntegrationError';
   }
 }
+
+export class UnauthorizedError extends HttpError {
+  public constructor(message = 'Требуется авторизация') {
+    super(401, message);
+    this.name = 'UnauthorizedError';
+  }
+}
+
+export class ConflictError extends HttpError {
+  public constructor(message: string) {
+    super(409, message);
+    this.name = 'ConflictError';
+  }
+}

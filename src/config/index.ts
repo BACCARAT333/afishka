@@ -11,6 +11,9 @@ export interface AppConfig {
   readonly defaultCity: string;
   readonly eventsCacheTtlMs: number;
   readonly eventSource: EventSourceMode;
+  readonly jwtSecret: string;
+  readonly jwtExpiresInSec: number;
+  readonly bcryptRounds: number;
 }
 
 function toNumber(value: string | undefined, fallback: number): number {
@@ -21,15 +24,22 @@ function toNumber(value: string | undefined, fallback: number): number {
 
 /** Собирает конфигурацию из переменных окружения (отдельной функцией, чтобы её можно было тестировать). */
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
+  const nodeEnv = env.NODE_ENV ?? 'development';
+  if (nodeEnv === 'production' && (env.JWT_SECRET ?? '') === '') {
+    throw new Error('В production нужно задать JWT_SECRET');
+  }
   return {
     port: toNumber(env.PORT, 3000),
-    nodeEnv: env.NODE_ENV ?? 'development',
+    nodeEnv,
     kudagoBaseUrl: env.KUDAGO_BASE_URL ?? 'https://kudago.com/public-api/v1.4/',
     kudagoTimeoutMs: toNumber(env.KUDAGO_TIMEOUT_MS, 5000),
     dbPath: env.DB_PATH ?? 'data/afishka.sqlite',
     defaultCity: env.DEFAULT_CITY ?? 'spb',
     eventsCacheTtlMs: toNumber(env.EVENTS_CACHE_TTL_MS, 60 * 60 * 1000),
     eventSource: env.EVENT_SOURCE === 'fixtures' ? 'fixtures' : 'auto',
+    jwtSecret: env.JWT_SECRET ?? 'dev-only-secret-change-me',
+    jwtExpiresInSec: toNumber(env.JWT_EXPIRES_IN_SEC, 7 * 24 * 60 * 60),
+    bcryptRounds: toNumber(env.BCRYPT_ROUNDS, 10),
   };
 }
 

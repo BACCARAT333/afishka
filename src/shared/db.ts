@@ -36,6 +36,20 @@ CREATE TABLE IF NOT EXISTS sync_state (
   city      TEXT PRIMARY KEY,
   synced_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users (
+  id            TEXT PRIMARY KEY,
+  email         TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at    TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS favorites (
+  user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  event_id   TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  PRIMARY KEY (user_id, event_id)
+);
 `;
 
 /** Открывает базу SQLite и создаёт таблицы, если их ещё нет. Путь ':memory:' — база в памяти. */
