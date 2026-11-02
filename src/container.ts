@@ -15,11 +15,13 @@ import { FavoriteService } from './modules/favorites/FavoriteService';
 import { SqliteFavoriteRepository } from './modules/favorites/SqliteFavoriteRepository';
 import { AuthController } from './modules/users/AuthController';
 import { AuthService } from './modules/users/AuthService';
+import { parseRegistration } from './modules/users/credentials';
 import { createAuthMiddleware } from './modules/users/authMiddleware';
 import { BcryptPasswordHasher } from './modules/users/PasswordHasher';
 import { SqliteUserRepository } from './modules/users/SqliteUserRepository';
 import { JwtTokenService } from './modules/users/TokenService';
 import { openDatabase } from './shared/db';
+import { ConflictError } from './shared/errors';
 import type { Logger } from './shared/logger';
 
 export interface Container {
@@ -72,6 +74,18 @@ export function createContainer(
     undefined,
     clock,
   );
+  if (cfg.seedUser !== null) {
+    // Тестовый пользователь для демонстрации: создаётся один раз, повторный запуск его не дублирует
+    const seed = parseRegistration(cfg.seedUser);
+    void authService
+      .register(seed)
+      .then(() => logger.info(`Создан тестовый пользователь ${seed.email}`))
+      .catch((error: unknown) => {
+        if (!(error instanceof ConflictError)) {
+          logger.error('Не удалось создать тестового пользователя', error);
+        }
+      });
+  }
   const favoriteService = new FavoriteService(new SqliteFavoriteRepository(db), repository, clock);
 
   return {

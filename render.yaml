@@ -1,0 +1,22 @@
+# Конфигурация деплоя на Render (Blueprint): https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: afishka
+    runtime: node
+    plan: free
+    # Сборка: сервер (tsc -> dist) и фронтенд (vite -> web/dist). devDependencies нужны для сборки.
+    buildCommand: npm ci --include=dev && npm run build && npm run web:build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '20'
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      # Тестовый пользователь для проверяющих (данные открыты намеренно, это не рабочая учётная запись)
+      - key: SEED_USER_EMAIL
+        value: demo@afishka.test
+      - key: SEED_USER_PASSWORD
+        value: demo-password-2026

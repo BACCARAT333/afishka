@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { resolve } from 'node:path';
 
 export type EventSourceMode = 'auto' | 'fixtures';
 
@@ -14,6 +15,10 @@ export interface AppConfig {
   readonly jwtSecret: string;
   readonly jwtExpiresInSec: number;
   readonly bcryptRounds: number;
+  /** Папка со сборкой фронтенда (web/dist): если она есть, сервер отдаёт сайт сам. */
+  readonly webDistDir: string;
+  /** Тестовый пользователь, который создаётся при запуске (для демонстрации и проверки). */
+  readonly seedUser: { readonly email: string; readonly password: string } | null;
 }
 
 function toNumber(value: string | undefined, fallback: number): number {
@@ -28,6 +33,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   if (nodeEnv === 'production' && (env.JWT_SECRET ?? '') === '') {
     throw new Error('В production нужно задать JWT_SECRET');
   }
+  const seedEmail = (env.SEED_USER_EMAIL ?? '').trim();
+  const seedPassword = env.SEED_USER_PASSWORD ?? '';
   return {
     port: toNumber(env.PORT, 3000),
     nodeEnv,
@@ -40,6 +47,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     jwtSecret: env.JWT_SECRET ?? 'dev-only-secret-change-me',
     jwtExpiresInSec: toNumber(env.JWT_EXPIRES_IN_SEC, 7 * 24 * 60 * 60),
     bcryptRounds: toNumber(env.BCRYPT_ROUNDS, 10),
+    webDistDir: resolve(env.WEB_DIST_DIR ?? 'web/dist'),
+    seedUser:
+      seedEmail !== '' && seedPassword !== '' ? { email: seedEmail, password: seedPassword } : null,
   };
 }
 

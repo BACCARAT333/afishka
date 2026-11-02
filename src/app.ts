@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import express, {
   type NextFunction,
   type Request,
@@ -17,10 +19,13 @@ export interface AppDependencies {
   authController: AuthController;
   favoriteController: FavoriteController;
   requireAuth: RequestHandler;
+  /** Папка со сборкой фронтенда; если не задана или пуста, сайт не отдаётся (только API). */
+  staticDir?: string;
 }
 
 export function createApp(deps: AppDependencies): express.Express {
   const app = express();
+  app.disable('x-powered-by');
   app.use(express.json());
 
   app.get('/api/health', (_req: Request, res: Response) => {
@@ -30,6 +35,11 @@ export function createApp(deps: AppDependencies): express.Express {
   app.use('/api/auth', createAuthRouter(deps.authController));
   app.use('/api/events', createEventRouter(deps.eventController));
   app.use('/api/favorites', createFavoriteRouter(deps.favoriteController, deps.requireAuth));
+
+  // Сайт (сборка web/dist) отдаётся тем же сервером; маршрутизация во фронтенде на хэшах (#/...)
+  if (deps.staticDir !== undefined && existsSync(join(deps.staticDir, 'index.html'))) {
+    app.use(express.static(deps.staticDir));
+  }
 
   app.use((_req: Request, _res: Response, next: NextFunction) => {
     next(new NotFoundError('Маршрут не найден'));

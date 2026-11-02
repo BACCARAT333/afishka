@@ -1,0 +1,12 @@
+version: '2'
+# Что не анализировать: тесты, документацию, сборку и сгенерированные файлы
+exclude_patterns:
+  - 'tests/'
+  - 'docs/'
+  - 'dist/'
+  - 'web/dist/'
+  - 'coverage/'
+  - '.vscode/'
+  - 'package-lock.json'
+  - '**/*.json'
+  - '**/*.md'

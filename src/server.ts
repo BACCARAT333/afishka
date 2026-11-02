@@ -6,7 +6,7 @@ import { ConsoleLogger } from './shared/logger';
 const logger = new ConsoleLogger();
 const container = createContainer(config, logger);
 
-const server = createApp(container).listen(config.port, () => {
+const server = createApp({ ...container, staticDir: config.webDistDir }).listen(config.port, () => {
   logger.info(`Афишка запущена: http://localhost:${config.port}`);
 });
 
