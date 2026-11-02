@@ -1,11 +1,11 @@
 # Афишка
 
 [![CI](https://github.com/BACCARAT333/afishka/actions/workflows/ci.yml/badge.svg)](https://github.com/BACCARAT333/afishka/actions/workflows/ci.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/<ID_БЕЙДЖА>/maintainability)](https://codeclimate.com/github/BACCARAT333/afishka/maintainability)
+[![Maintainability](https://qlty.sh/gh/BACCARAT333/projects/afishka/maintainability.svg)](https://qlty.sh/gh/BACCARAT333/projects/afishka)
 
 Афишка — веб-приложение афиши событий (по типу Яндекс Афиши). Показывает концерты, спектакли, выставки и кино с фильтрами по городу, категории, датам, цене и тексту. Данные берутся из публичного API KudaGo и кэшируются в базе SQLite; если API недоступно, приложение работает на запасных данных из JSON. Зарегистрированный пользователь может вести список избранных событий.
 
-**Сайт:** <ССЫЛКА_НА_ДЕПЛОЙ>
+**Сайт:** https://afishka.onrender.com
 
 **Тестовый аккаунт:** `demo@afishka.test` / `demo-password-2026`
 
